@@ -57,8 +57,9 @@ public class GeneratorView {
     Site site;
     
     //SiteToolbar
-    FlowPane siteToolbarPane;
-    
+    BorderPane siteToolbarPane;
+    FlowPane pageAddRemove;
+    TabPane pageSelect;    
     
     //This is for saving and loading sites
     GeneratorFileManager fileManager;
@@ -83,6 +84,7 @@ public class GeneratorView {
     
     public void startUI(Stage initPrimaryStage, String windowTitle) {
         initFileToolbar();
+        initSiteToolbar();
         initWorkspace();
         initEventHandlers();
         primaryStage = initPrimaryStage;
@@ -105,6 +107,7 @@ public class GeneratorView {
 	primaryStage.setHeight(bounds.getHeight());
 
         // SETUP THE UI, NOTE WE'LL ADD THE WORKSPACE LATER 
+        GenPane = new BorderPane();
         GenPane.setTop(fileToolbarPane);
         
 	
@@ -139,12 +142,12 @@ public class GeneratorView {
     private void initFileToolbar() {
        fileToolbarPane = new FlowPane();
        
-       newSiteButton = initChildButton(fileToolbarPane, "NEW BUTTON", "CSS", true);
-       LoadSiteButton = initChildButton(fileToolbarPane, "Load BUTTON", "CSS", true);
-       SaveSiteButton = initChildButton(fileToolbarPane, "Save BUTTON", "CSS", true);
-       SaveAsSiteButton = initChildButton(fileToolbarPane, "SaveAs BUTTON", "CSS", true);
-       ExportSiteButton = initChildButton(fileToolbarPane, "Export BUTTON", "CSS", true);
-       ExitButton = initChildButton(fileToolbarPane, "Exit BUTTON", "CSS", true);
+       newSiteButton = initChildButton(fileToolbarPane, "NEW BUTTON", "CSS", false);
+       LoadSiteButton = initChildButton(fileToolbarPane, "Load BUTTON", "CSS", false);
+       SaveSiteButton = initChildButton(fileToolbarPane, "Save BUTTON", "CSS", false);
+       SaveAsSiteButton = initChildButton(fileToolbarPane, "SaveAs BUTTON", "CSS", false);
+       ExportSiteButton = initChildButton(fileToolbarPane, "Export BUTTON", "CSS", false);
+       ExitButton = initChildButton(fileToolbarPane, "Exit BUTTON", "CSS", false);
        
        
     }
@@ -176,44 +179,34 @@ public class GeneratorView {
 	return button;
     }
 
-    private void initWorkspace() {
-        
-        BorderPane Workspace = new BorderPane();
+    private void initWorkspace() { 
+        Workspace = new BorderPane();
         TabPane editOrView = new TabPane();
+        editOrView.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         Tab edit = new Tab();
         Tab view = new Tab();
         edit.setText("Edit");
-        view.setText("View");
-        editOrView.getTabs().addAll(edit, view);
-        editOrView.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+        view.setText("View");  
         
+        edit.setContent(siteToolbarPane);
         
+        editOrView.getTabs().addAll(edit, view);  
         Workspace.setTop(editOrView);
         
-        BorderPane pageEdit = new BorderPane();
+   
+    }
+        //Should be hidden until a ePortfolio is created or loaded.
+    private void initSiteToolbar() {
+        siteToolbarPane = new BorderPane();
+        pageAddRemove = new FlowPane();
+        pageSelect = new TabPane();  
+        
+        //Right now, tab pane is empty
         
         
         
         
-        pageEdit.setTop(siteToolbarPane);
-        //pageEdit.setCenter(Controls);
-        edit.setContent(pageEdit);
-        
-        
-        
-        
-        BorderPane pageView = new BorderPane();
-        pageView.setTop(siteToolbarPane);
-        //pageView.setCenter(html file);
-        view.setContent(pageView);
-        
-        
-        
-        
-        
-        
-        Workspace.setCenter(pageEdit);
-        
-        
+        siteToolbarPane.setTop(pageAddRemove);
+        siteToolbarPane.setCenter(pageSelect);
     }
 }
