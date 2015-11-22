@@ -6,8 +6,8 @@
 package ePG.model;
 
 /**
- *
- * @author Cokers
+ *  This will hold the data for the page and have controls for editing components
+ * 
  */
 public class Page {
     

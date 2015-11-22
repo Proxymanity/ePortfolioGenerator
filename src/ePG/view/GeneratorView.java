@@ -53,13 +53,19 @@ public class GeneratorView {
     Button ExportSiteButton;
     Button ExitButton;
     
+    
+    TabPane editOrView;
+    Tab edit;
+    Tab view;
     //Thiis is the site we're working on
     Site site;
     
     //SiteToolbar
     BorderPane siteToolbarPane;
     FlowPane pageAddRemove;
-    TabPane pageSelect;    
+    TabPane pageSelect;
+    Button AddPage;
+    Button RemovePage;
     
     //This is for saving and loading sites
     GeneratorFileManager fileManager;
@@ -110,9 +116,6 @@ public class GeneratorView {
         GenPane = new BorderPane();
         GenPane.setTop(fileToolbarPane);
         
-	
-        GenPane.setCenter(Workspace);
-        
 	primaryScene = new Scene(GenPane);
         
        // primaryScene = new Scene(ssmPane);
@@ -130,6 +133,7 @@ public class GeneratorView {
   //  });
 	primaryStage.setScene(primaryScene);
      //  primaryStage.getIcons().add(new Image("logo.png"));   // Logo is in src folder
+        System.out.println(editOrView.getSelectionModel().getSelectedIndex());
 	primaryStage.show();
     }
 
@@ -144,9 +148,9 @@ public class GeneratorView {
        
        newSiteButton = initChildButton(fileToolbarPane, "NEW BUTTON", "CSS", false);
        LoadSiteButton = initChildButton(fileToolbarPane, "Load BUTTON", "CSS", false);
-       SaveSiteButton = initChildButton(fileToolbarPane, "Save BUTTON", "CSS", false);
-       SaveAsSiteButton = initChildButton(fileToolbarPane, "SaveAs BUTTON", "CSS", false);
-       ExportSiteButton = initChildButton(fileToolbarPane, "Export BUTTON", "CSS", false);
+       SaveSiteButton = initChildButton(fileToolbarPane, "Save BUTTON", "CSS", true);
+       SaveAsSiteButton = initChildButton(fileToolbarPane, "SaveAs BUTTON", "CSS", true);
+       ExportSiteButton = initChildButton(fileToolbarPane, "Export BUTTON", "CSS", true);
        ExitButton = initChildButton(fileToolbarPane, "Exit BUTTON", "CSS", false);
        
        
@@ -154,6 +158,47 @@ public class GeneratorView {
 
     private void initEventHandlers() {
         //TODO
+        fileController = new FileController(this, fileManager);
+        //Set New and Load buttons to run updateToolbar
+        newSiteButton.setOnAction(e -> {
+         fileController.handleNewSiteRequest();
+        });
+        
+        LoadSiteButton.setOnAction(e -> {
+         fileController.handleLoadSiteRequest();
+        });
+        
+        
+        AddPage.setOnAction(e -> {
+           Tab newPage = new Tab();
+           PageEditView pev = new PageEditView(this);
+           newPage.setContent(pev);
+           pageSelect.getTabs().add(newPage);
+           
+        //   edit.setContent(siteToolbarPane);
+         //  if(pageSelect.getTabs().size()== 1){
+          //  Pane test = new Pane();
+          //  test.getChildren().add(new Label("Hello"));
+
+           //    if(test.getChildren().size() == 1){
+           //        System.out.println("test is 1!");
+           //        editOrView.getSelectionModel().select(view);
+           //    }
+        //   }
+        });
+        
+        RemovePage.setOnAction(e -> {
+            int selected = pageSelect.getSelectionModel().getSelectedIndex();
+            pageSelect.getTabs().remove(selected);
+        });
+        
+        ExportSiteButton.setOnAction(e -> {
+           editOrView.getTabs().get(1).setDisable(false);
+        });
+        
+        ExitButton.setOnAction(e -> {
+         System.exit(0);
+        });
     }
     
     /**
@@ -181,16 +226,19 @@ public class GeneratorView {
 
     private void initWorkspace() { 
         Workspace = new BorderPane();
-        TabPane editOrView = new TabPane();
+        editOrView = new TabPane();
         editOrView.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         Tab edit = new Tab();
         Tab view = new Tab();
         edit.setText("Edit");
-        view.setText("View");  
-        
+        view.setText("View");
         edit.setContent(siteToolbarPane);
         
-        editOrView.getTabs().addAll(edit, view);  
+
+        view.setDisable(true);
+        editOrView.getTabs().addAll(edit, view);
+        
+        editOrView.getSelectionModel().select(edit);
         Workspace.setTop(editOrView);
         
    
@@ -201,12 +249,36 @@ public class GeneratorView {
         pageAddRemove = new FlowPane();
         pageSelect = new TabPane();  
         
-        //Right now, tab pane is empty
+        AddPage = initChildButton(pageAddRemove, "Add BUTTON", "CSS", true);
+        RemovePage = initChildButton(pageAddRemove, "Remove BUTTON", "CSS", true);
         
-        
-        
-        
+        Tab newPage = new Tab();
+           PageEditView pev = new PageEditView(this);
+           newPage.setContent(pev);
+           pageSelect.getTabs().add(newPage);
+        //Right now, PageSelect pane is empty
         siteToolbarPane.setTop(pageAddRemove);
         siteToolbarPane.setCenter(pageSelect);
+        
+        
+    }
+    
+    public void updateToolbarControls() {
+	// FIRST MAKE SURE THE WORKSPACE IS THERE
+	GenPane.setCenter(Workspace);
+	
+	// NEXT ENABLE/DISABLE BUTTONS AS NEEDED IN THE FILE TOOLBAR
+
+	SaveSiteButton.setDisable(false);
+        SaveAsSiteButton.setDisable(false);
+        ExportSiteButton.setDisable(false);
+	
+	// AND THE SLIDESHOW EDIT TOOLBAR
+	AddPage.setDisable(false);
+        RemovePage.setDisable(false);
+    }
+    
+    public void refresh(){
+        
     }
 }
