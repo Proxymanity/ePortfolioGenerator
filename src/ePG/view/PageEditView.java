@@ -37,6 +37,7 @@ public class PageEditView extends BorderPane{
     Button AddVideo;
     Button AddSlideshow;
     Button AddLink;
+    Button AddList;
     
     
     PageEditView(GeneratorView initUI){
@@ -58,7 +59,8 @@ public class PageEditView extends BorderPane{
         AddText = initChildButton(controls, "Add Text", "CSS", false);
         AddImage = initChildButton(controls, "Add Image", "CSS", false);
         AddVideo = initChildButton(controls, "Add Video", "CSS", false);
-        
+        AddSlideshow = initChildButton(controls,"Add SlideShow", "CSS", false);
+        AddList = initChildButton(controls, "Add a List", "CSS", false);
         initHandlers();
     }
     
@@ -92,6 +94,13 @@ public class PageEditView extends BorderPane{
          ImageDialog();
      });
      
+     AddVideo.setOnAction(e -> {
+         VideoDialog();
+     });
+     
+     AddList.setOnAction(e ->{
+         ListDialog();
+     });
      
     }
     
@@ -223,7 +232,7 @@ public class PageEditView extends BorderPane{
         mainPane.getChildren().addAll(SelectImage, captionBox, HeightBox, WidthBox, alignmentBox, Accept);
         Scene scene = new Scene(mainPane, 250, 600);
        // scene.getStylesheets().add(STYLE_SHEET_UI);
-        dialog.setTitle("Text");
+        dialog.setTitle("Image");
         dialog.setScene(scene);
         dialog.showAndWait();
     }
@@ -253,5 +262,84 @@ public class PageEditView extends BorderPane{
         dialoug.setTitle("HyperLink");
         dialoug.setScene(scene);
         dialoug.showAndWait(); 
+    }
+
+    private void VideoDialog() {
+        Stage dialog = new Stage();
+        HBox SelectImage = new HBox(); 
+        Button Select = initChildButton(SelectImage, "Select Video", "CSS",false);
+        
+        HBox captionBox = new HBox();
+        Label captionLabel = new Label("Caption : ");
+        TextField caption = new TextField();
+        captionBox.getChildren().addAll(captionLabel, caption);
+        
+        HBox HeightBox = new HBox();
+        Label heightLabel = new Label("Height :  ");
+        TextField height = new TextField();
+        HeightBox.getChildren().addAll(heightLabel, height);
+        
+        HBox WidthBox = new HBox();
+        Label widthLabel = new Label("Width :   ");
+        TextField width = new TextField();
+        WidthBox.getChildren().addAll(widthLabel, width);
+                
+
+        Button Accept = new Button ("Accept");
+        Accept.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){  
+                dialog.close();
+                }
+            });
+        
+        VBox mainPane = new VBox();
+       // mainPane.getStyleClass().add(CENTER);
+        mainPane.getChildren().addAll(SelectImage, captionBox, HeightBox, WidthBox, Accept);
+        Scene scene = new Scene(mainPane, 250, 600);
+       // scene.getStylesheets().add(STYLE_SHEET_UI);
+        dialog.setTitle("Video");
+        dialog.setScene(scene);
+        dialog.showAndWait();
+    }
+
+    private void ListDialog() {
+        Stage dialog = new Stage();
+        Button add = new Button("Add Item");
+        VBox listPane = new VBox();
+        add.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){  
+                HBox item = new HBox();
+                Button Remove = new Button("Remove");
+                TextField text = new TextField();
+                  Remove.setOnAction(new EventHandler<ActionEvent>(){
+                    @Override
+                    public void handle(ActionEvent e){  
+                        listPane.getChildren().remove(item);
+                    }
+                  });
+
+                item.getChildren().addAll(Remove, text);
+                listPane.getChildren().add(item);
+                }
+            });
+        
+        Button Accept = new Button ("Accept");
+        Accept.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){  
+                dialog.close();
+                }
+            });
+        
+        VBox mainPane = new VBox();
+       // mainPane.getStyleClass().add(CENTER);
+        mainPane.getChildren().addAll(add,listPane, Accept);
+        Scene scene = new Scene(mainPane, 250, 600);
+       // scene.getStylesheets().add(STYLE_SHEET_UI);
+        dialog.setTitle("List");
+        dialog.setScene(scene);
+        dialog.showAndWait();
     }
 }
