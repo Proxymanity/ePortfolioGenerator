@@ -48,7 +48,7 @@ public class Page {
         List = FXCollections.observableArrayList();
         Header = FXCollections.observableArrayList();
         //Defaults
-        Banner = ("Default Banner");
+        Banner = ("Namey Namington");
         Title = ("Title");
         BannerImage = ("Banner Image.png");
         Footer = ("Footer.png");       
@@ -74,7 +74,7 @@ public class Page {
         HBox titleBox = new HBox();
         titleBox.getChildren().addAll(new Label("Title :") , new Label(this.Title));
         HBox bannerBox = new HBox();
-        bannerBox.getChildren().addAll(new Label("Banner :") , new Label(this.Banner));
+        bannerBox.getChildren().addAll(new Label("Name:") , new Label(this.Banner));
         HBox bannerImageBox = new HBox();
         bannerImageBox.getChildren().addAll(new Label("BannerImage :") , new Label(this.BannerImage));
         HBox footerBox = new HBox();

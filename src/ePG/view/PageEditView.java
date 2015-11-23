@@ -57,7 +57,8 @@ public class PageEditView extends HBox{
     private void initControls(){
         changeTitle = initChildButton(controls,"Change Title","CSS",false);
         changeName = initChildButton(controls, "Change Name", "CSS", false);
-        //changeLayout = initChildButton(controls, "Change Layout", "CSS", false);
+        changeBannerImage = initChildButton(controls, "Change Banner Image", "CSS", false);
+        changeFooter = initChildButton(controls, "Change Footer", "CSS", false);
         final ToggleGroup font = new ToggleGroup();
         RadioButton font1 = new RadioButton("Font 1");
         font1.setToggleGroup(font);
@@ -102,8 +103,29 @@ public class PageEditView extends HBox{
         
         controls.getChildren().add(layoutBox);
         
-        changeBannerImage = initChildButton(controls, "Change Name", "CSS", false);
-        changeFooter = initChildButton(controls, "Change Footer", "CSS", false);
+         final ToggleGroup color = new ToggleGroup();
+        RadioButton color1 = new RadioButton("Color 1");
+        color1.setToggleGroup(color);
+        color1.setSelected(true);
+        
+        RadioButton color2 = new RadioButton("Color 2");
+        color2.setToggleGroup(color);
+        
+        RadioButton color3 = new RadioButton("Color 3");
+        color3.setToggleGroup(color);
+        
+        RadioButton color4 = new RadioButton("Color 4");
+        color4.setToggleGroup(color);
+        
+        RadioButton color5 = new RadioButton("Color 5");
+        color5.setToggleGroup(color);
+        
+        HBox colorBox = new HBox();
+        colorBox.getChildren().addAll(color1,color2,color3,color4,color5);
+        
+        controls.getChildren().add(colorBox);
+        
+        
         AddHeader = initChildButton(controls, "Add Header", "CSS", false);
         AddText = initChildButton(controls, "Add Text", "CSS", false);
         AddImage = initChildButton(controls, "Add Image", "CSS", false);
@@ -156,6 +178,22 @@ public class PageEditView extends HBox{
      AddSlideshow.setOnAction(e->{
          SlideshowDialog();
      });
+     
+     changeTitle.setOnAction(e ->{
+       titleDialog(); 
+    });
+     
+    changeName.setOnAction(e -> {
+       nameDialog(); 
+    });
+    
+    changeBannerImage.setOnAction(e ->{
+       bannerImageDialog();     
+     });
+    
+    changeFooter.setOnAction(e -> {
+        footerDialog();
+    });
      
     }
     
@@ -411,5 +449,124 @@ public class PageEditView extends HBox{
     
     public String getTitle(){
         return this.page.getTitle();
+    }
+
+    private void titleDialog() {
+        Stage dialog = new Stage();
+        Button Accept = new Button ("Accept");
+        Accept.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){  
+                dialog.close();
+                }
+            });
+        
+        VBox mainPane = new VBox();
+       // mainPane.getStyleClass().add(CENTER);
+        TextField input = new TextField();
+        mainPane.getChildren().addAll(input, Accept);
+        Scene scene = new Scene(mainPane, 250, 200);
+       // scene.getStylesheets().add(STYLE_SHEET_UI);
+        dialog.setTitle("Title");
+        dialog.setScene(scene);
+        dialog.showAndWait();
+    }
+
+    private void nameDialog() {
+        Stage dialog = new Stage();
+        Button Accept = new Button ("Accept");
+        Accept.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){  
+                dialog.close();
+                }
+            });
+        
+        VBox mainPane = new VBox();
+       // mainPane.getStyleClass().add(CENTER);
+        TextField input = new TextField();
+        mainPane.getChildren().addAll(input, Accept);
+        Scene scene = new Scene(mainPane, 250, 200);
+       // scene.getStylesheets().add(STYLE_SHEET_UI);
+        dialog.setTitle("Name");
+        dialog.setScene(scene);
+        dialog.showAndWait();
+    }
+
+    private void bannerImageDialog() {
+        Stage dialog = new Stage();
+        HBox SelectImage = new HBox(); 
+        Button Select = initChildButton(SelectImage, "Select Banner Image", "CSS",false);
+        
+        Button Accept = new Button ("Accept");
+        Accept.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){  
+                dialog.close();
+                }
+            });
+        
+        VBox mainPane = new VBox();
+       // mainPane.getStyleClass().add(CENTER);
+        mainPane.getChildren().addAll(SelectImage, Accept);
+        Scene scene = new Scene(mainPane, 250, 600);
+       // scene.getStylesheets().add(STYLE_SHEET_UI);
+        dialog.setTitle("Image");
+        dialog.setScene(scene);
+        dialog.showAndWait();
+    }
+
+    private void footerDialog() {
+       Stage dialog = new Stage();
+        HBox buttonBox = new HBox(); 
+        Button Hyperlink = initChildButton(buttonBox, "Insert Hyperlink", "CSS",false);
+        
+                
+        final ToggleGroup font = new ToggleGroup();
+        RadioButton font1 = new RadioButton("Font 1");
+        font1.setToggleGroup(font);
+
+        RadioButton font2 = new RadioButton("Font 2");
+        font2.setToggleGroup(font);
+        font2.setSelected(true);
+ 
+        RadioButton font3 = new RadioButton("Font 3");
+        font3.setToggleGroup(font);
+        
+        RadioButton font4 = new RadioButton("Font 4");
+        font4.setToggleGroup(font);
+        
+        RadioButton font5 = new RadioButton("Font 5");
+        font5.setToggleGroup(font);
+        
+        HBox fontBox = new HBox();
+        fontBox.getChildren().addAll(font1,font2,font3,font4,font5);
+        
+        Button Accept = new Button ("Accept");
+        Accept.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){  
+                dialog.close();
+                }
+            });
+        
+        VBox mainPane = new VBox();
+       // mainPane.getStyleClass().add(CENTER);
+        TextArea input = new TextArea();
+        
+         Hyperlink.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+             public void handle(ActionEvent e){  
+                String text = input.getText();
+                String selected = input.getSelectedText();
+                HyperlinkDialog(text,selected);
+                }
+        });
+        mainPane.getChildren().addAll(buttonBox,fontBox,input, Accept);
+        Scene scene = new Scene(mainPane, 400, 250);
+       // scene.getStylesheets().add(STYLE_SHEET_UI);
+        dialog.setTitle("Change Footer");
+        dialog.setScene(scene);
+        dialog.showAndWait();
     }
 }
