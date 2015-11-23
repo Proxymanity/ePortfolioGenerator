@@ -1,1 +1,11 @@
 /dist/
+/src/SlideShowEditor/PropertiesManager/build/
+/src/SlideShowEditor/PropertiesManager/dist/
+/src/SlideShowEditor/PropertiesManager/nbproject/private/
+/src/SlideShowEditor/SlideshowMaker/build/
+/src/SlideShowEditor/SlideshowMaker/dist/
+/src/SlideShowEditor/SlideshowMaker/nbproject/private/
+/src/SlideShowEditor/SlideshowMaker/index/nbproject/private/
+/src/SlideShowEditor/XMLUtilities/build/
+/src/SlideShowEditor/XMLUtilities/dist/
+/src/SlideShowEditor/XMLUtilities/nbproject/private/

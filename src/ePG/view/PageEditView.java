@@ -3,8 +3,11 @@ package ePG.view;
 
 import javafx.scene.layout.VBox;
 import ePG.model.Page;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -17,11 +20,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+import ssm.SlideShowMaker;
+
 /**
  *This UI component has the controls for editing a single page
  * Left are controls, right is the components
  */
-public class PageEditView extends BorderPane{
+public class PageEditView extends HBox{
     Page page;
     GeneratorView ui;
     VBox controls;
@@ -45,14 +51,57 @@ public class PageEditView extends BorderPane{
         controls = new VBox();
         initControls();
         initPage();
-        this.setLeft(controls);
-        this.setRight(page.load());
+        this.getChildren().addAll(controls, page.load());
     }
     
     private void initControls(){
         changeTitle = initChildButton(controls,"Change Title","CSS",false);
         changeName = initChildButton(controls, "Change Name", "CSS", false);
-        changeLayout = initChildButton(controls, "Change Layout", "CSS", false);
+        //changeLayout = initChildButton(controls, "Change Layout", "CSS", false);
+        final ToggleGroup font = new ToggleGroup();
+        RadioButton font1 = new RadioButton("Font 1");
+        font1.setToggleGroup(font);
+        font1.setSelected(true);
+        
+        RadioButton font2 = new RadioButton("Font 2");
+        font2.setToggleGroup(font);
+        
+        RadioButton font3 = new RadioButton("Font 3");
+        font3.setToggleGroup(font);
+        
+        RadioButton font4 = new RadioButton("Font 4");
+        font4.setToggleGroup(font);
+        
+        RadioButton font5 = new RadioButton("Font 5");
+        font5.setToggleGroup(font);
+        
+        HBox fontBox = new HBox();
+        fontBox.getChildren().addAll(font1,font2,font3,font4,font5);
+        
+        controls.getChildren().add(fontBox);
+        
+        final ToggleGroup layout = new ToggleGroup();
+        RadioButton layout1 = new RadioButton("Layout 1");
+        layout1.setToggleGroup(layout);
+        layout1.setSelected(true);
+        
+        RadioButton layout2 = new RadioButton("Layout 2");
+        layout2.setToggleGroup(layout);
+ 
+        RadioButton layout3 = new RadioButton("Layout 3");
+        layout3.setToggleGroup(layout);
+        
+        RadioButton layout4 = new RadioButton("Layout 4");
+        layout4.setToggleGroup(layout);
+        
+        RadioButton layout5 = new RadioButton("Layout 5");
+        layout5.setToggleGroup(layout);
+        
+        HBox layoutBox = new HBox();
+        layoutBox.getChildren().addAll(layout1,layout2,layout3,layout4,layout5);
+        
+        controls.getChildren().add(layoutBox);
+        
         changeBannerImage = initChildButton(controls, "Change Name", "CSS", false);
         changeFooter = initChildButton(controls, "Change Footer", "CSS", false);
         AddHeader = initChildButton(controls, "Add Header", "CSS", false);
@@ -81,6 +130,8 @@ public class PageEditView extends BorderPane{
 	toolbar.getChildren().add(button);
 	return button;
     }
+     
+     
     private void initHandlers(){
      AddHeader.setOnAction(e ->{
         HeaderDialog(); 
@@ -102,6 +153,10 @@ public class PageEditView extends BorderPane{
          ListDialog();
      });
      
+     AddSlideshow.setOnAction(e->{
+         SlideshowDialog();
+     });
+     
     }
     
   
@@ -116,7 +171,7 @@ public class PageEditView extends BorderPane{
         
                 
         final ToggleGroup font = new ToggleGroup();
-        RadioButton font1 = new RadioButton("Font1");
+        RadioButton font1 = new RadioButton("Font 1");
         font1.setToggleGroup(font);
 
         RadioButton font2 = new RadioButton("Font 2");
@@ -341,5 +396,20 @@ public class PageEditView extends BorderPane{
         dialog.setTitle("List");
         dialog.setScene(scene);
         dialog.showAndWait();
+    }
+    
+    private void SlideshowDialog() {
+        //Run SlideShowMaker
+        SlideShowMaker ss = new SlideShowMaker();
+        
+        try {
+            ss.startEditor();
+        } catch (Exception ex) {
+            System.out.println("SS Error");
+        }
+    }
+    
+    public String getTitle(){
+        return this.page.getTitle();
     }
 }

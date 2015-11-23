@@ -27,6 +27,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import properties_manager.PropertiesManager;
+import ssm.LanguagePropertyType;
+import static ssm.StartupConstants.PATH_ICONS;
 
 /**
  *
@@ -146,14 +149,37 @@ public class GeneratorView {
     private void initFileToolbar() {
        fileToolbarPane = new FlowPane();
        
-       newSiteButton = initChildButton(fileToolbarPane, "NEW BUTTON", "CSS", false);
-       LoadSiteButton = initChildButton(fileToolbarPane, "Load BUTTON", "CSS", false);
-       SaveSiteButton = initChildButton(fileToolbarPane, "Save BUTTON", "CSS", true);
-       SaveAsSiteButton = initChildButton(fileToolbarPane, "SaveAs BUTTON", "CSS", true);
-       ExportSiteButton = initChildButton(fileToolbarPane, "Export BUTTON", "CSS", true);
-       ExitButton = initChildButton(fileToolbarPane, "Exit BUTTON", "CSS", false);
+       newSiteButton = initChildButton(fileToolbarPane,"New.png", "New ePortfolio", "CSS", false);
+       LoadSiteButton = initChildButton(fileToolbarPane,"Load.png", "Load", "CSS", false);
+       SaveSiteButton = initChildButton(fileToolbarPane,"Save.png", "Save", "CSS", true);
+       SaveAsSiteButton = initChildButton(fileToolbarPane, "SaveAs.png","SaveAs", "CSS", true);
+       ExportSiteButton = initChildButton(fileToolbarPane, "Export.png","Export ePortfolio", "CSS", true);
+       ExitButton = initChildButton(fileToolbarPane, "Exit.png","Exit", "CSS", false);
        
        
+    }
+    
+     /**
+     * This helps initialize buttons in a toolbar, constructing a custom button
+     * with a customly provided icon and tooltip, adding it to the provided
+     * toolbar pane, and then returning it.
+     */
+    public Button initChildButton(
+	    Pane toolbar, 
+	    String iconFileName, 
+	    String tooltip, 
+	    String cssClass,
+	    boolean disabled) {
+	String imagePath = "file:" + "./images/icons/" + iconFileName;
+	Image buttonImage = new Image(imagePath);
+	Button button = new Button();
+	button.getStyleClass().add(cssClass);
+	button.setDisable(disabled);
+	button.setGraphic(new ImageView(buttonImage));
+	Tooltip buttonTooltip = new Tooltip(tooltip);
+	button.setTooltip(buttonTooltip);
+	toolbar.getChildren().add(button);
+	return button;
     }
 
     private void initEventHandlers() {
@@ -172,6 +198,7 @@ public class GeneratorView {
         AddPage.setOnAction(e -> {
            Tab newPage = new Tab();
            PageEditView pev = new PageEditView(this);
+           newPage.setText(pev.getTitle());
            newPage.setContent(pev);
            pageSelect.getTabs().add(newPage);
            
@@ -188,8 +215,10 @@ public class GeneratorView {
         });
         
         RemovePage.setOnAction(e -> {
+            if(pageSelect.getChildrenUnmodifiable().size() != 0){
             int selected = pageSelect.getSelectionModel().getSelectedIndex();
             pageSelect.getTabs().remove(selected);
+            }
         });
         
         ExportSiteButton.setOnAction(e -> {
@@ -234,6 +263,8 @@ public class GeneratorView {
         view.setText("View");
         edit.setContent(siteToolbarPane);
         
+        PageViewer pageview = new PageViewer(this);
+        view.setContent(pageview);
 
         view.setDisable(true);
         editOrView.getTabs().addAll(edit, view);
@@ -248,13 +279,15 @@ public class GeneratorView {
         siteToolbarPane = new BorderPane();
         pageAddRemove = new FlowPane();
         pageSelect = new TabPane();  
-        
+        pageSelect.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         AddPage = initChildButton(pageAddRemove, "Add BUTTON", "CSS", true);
         RemovePage = initChildButton(pageAddRemove, "Remove BUTTON", "CSS", true);
         
         Tab newPage = new Tab();
+            newPage.setClosable(false);
            PageEditView pev = new PageEditView(this);
            newPage.setContent(pev);
+           newPage.setText(pev.getTitle());
            pageSelect.getTabs().add(newPage);
         //Right now, PageSelect pane is empty
         siteToolbarPane.setTop(pageAddRemove);
