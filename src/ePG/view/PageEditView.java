@@ -5,7 +5,7 @@ import ePG.controller.ImageSelectionController;
 import ePG.controller.VideoSelectionController;
 import ePG.model.Header;
 import ePG.model.Image;
-import ePG.model.List;
+import ePG.model.ListObject;
 import javafx.scene.layout.VBox;
 import ePG.model.Page;
 import ePG.model.Site;
@@ -64,7 +64,7 @@ public class PageEditView extends HBox{
     ImageSelectionController imageController;
     VideoSelectionController videoController;
     
-    PageEditView(GeneratorView initUI, Tab parent){
+    public PageEditView(GeneratorView initUI, Tab parent){
         ui = initUI;
         controls = new VBox();
         initPage();
@@ -620,7 +620,7 @@ public class PageEditView extends HBox{
         Accept.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e){  
-                ObservableList<List> listArray = pageToEdit.getList();
+                ObservableList<ListObject> listArray = pageToEdit.getList();
                 ObservableList<String> itemArray = pageToEdit.getItems();
 
                 itemArray.add("LIST");
@@ -647,7 +647,7 @@ public class PageEditView extends HBox{
                 }
                 
                 
-                List newList = new List(listItems, fontText);
+                ListObject newList = new ListObject(listItems, fontText);
                 listArray.add(newList);
                 reload();
                 dialog.close();

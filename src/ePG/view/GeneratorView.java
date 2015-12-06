@@ -73,7 +73,7 @@ public class GeneratorView {
     Button RemovePage;
     
     //This is for saving and loading sites
-    GeneratorFileManager fileManager;
+    public GeneratorFileManager fileManager;
     
     // Routes the proper responses associated with the FileToolbar
     private FileController fileController;
@@ -83,9 +83,9 @@ public class GeneratorView {
     
     
     
-    public GeneratorView(GeneratorFileManager initFileManager){ 
+    public GeneratorView(){ 
         	// FIRST HOLD ONTO THE FILE MANAGER
-	fileManager = initFileManager;
+	fileManager = new GeneratorFileManager(this);
 	
 	// MAKE THE DATA MANAGING MODEL
 	site = new Site(this);
@@ -193,9 +193,16 @@ public class GeneratorView {
         });
         
         LoadSiteButton.setOnAction(e -> {
-      //   fileController.handleLoadSiteRequest();
+        fileController.handleLoadSiteRequest();
         });
         
+        SaveSiteButton.setOnAction(e -> {
+            fileController.handleSaveSiteRequest();
+        });
+        
+        SaveAsSiteButton.setOnAction(e -> {
+            fileController.handleSaveAsSiteRequest();
+        });
         
         AddPage.setOnAction(e -> {
            Tab newPage = new Tab();
@@ -205,16 +212,6 @@ public class GeneratorView {
            newPage.setContent(pev); 
            pageSelect.getTabs().add(newPage);
            
-        //   edit.setContent(siteToolbarPane);
-         //  if(pageSelect.getTabs().size()== 1){
-          //  Pane test = new Pane();
-          //  test.getChildren().add(new Label("Hello"));
-
-           //    if(test.getChildren().size() == 1){
-           //        System.out.println("test is 1!");
-           //        editOrView.getSelectionModel().select(view);
-           //    }
-        //   }
         });
         
         RemovePage.setOnAction(e -> {
@@ -323,5 +320,13 @@ public class GeneratorView {
 
     public Site getSite() {
         return this.site;
+    }
+    
+    public TabPane getPageSelect(){
+        return this.pageSelect;
+    }
+    
+    public Stage getWindow(){
+        return primaryStage;
     }
 }

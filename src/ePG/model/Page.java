@@ -36,7 +36,7 @@ public class Page {
     ObservableList<Image> Image;
     ObservableList<Video> Video;
     ObservableList<SlideShow> SlideShow;
-    ObservableList<List> List;
+    ObservableList<ListObject> List;
     ObservableList<Header> Header;
     String Banner;
     String Title;
@@ -72,7 +72,8 @@ public class Page {
           footerFont = "1";   
           pageFont = "1";
           pageColor = "1";
-          pageLayout = "1";         
+          pageLayout = "1";       
+         /**
           Items.addAll("HEADER","TEXT", "IMAGE", "VIDEO", "SLIDESHOW", "LIST");
           
           Header hdr = new Header("Sample Header");
@@ -81,7 +82,7 @@ public class Page {
           Text txt = new Text("Sample Paragraph", "1");
           Text.add(txt);
           
-          Image img = new Image("imgName", "imgPath", "Caption", "width", "height", "leftAlign");
+          Image img = new Image("imgName", "imgPath", "Caption", "width", "height", "left");
           Image.add(img);
           
           Video vd = new Video("vdName", "vdPath", "caption", "width", "height");
@@ -93,9 +94,9 @@ public class Page {
           ObservableList<String> listItems = FXCollections.observableArrayList();
           listItems.addAll("List1", "List2", "List 3", "List 4");
           
-          List list = new List(listItems, "1");
+          ListObject list = new ListObject(listItems, "1");
           List.add(list);
-          
+        */
     }        
     public void setName(String text){
         this.Banner = text;
@@ -284,7 +285,7 @@ public class Page {
                Label ListcomponentName = new Label("LIST");
                VBox listBox = new VBox();
                
-               List tempList = List.get(listCounter);
+               ListObject tempList = List.get(listCounter);
                listCounter++;
                Label content1 = new Label("Font: " +tempList.getFont());
                
@@ -617,7 +618,7 @@ public class Page {
         dialog.showAndWait();
     }
 
-    private void ListDialog(List listObject) {
+    private void ListDialog(ListObject listObject) {
         Stage dialog = new Stage();
         Button add = new Button("Add Item");
         VBox listPane = new VBox();
@@ -777,7 +778,35 @@ public class Page {
         return this.Video;
     }
 
-    public ObservableList<List> getList() {
+    public ObservableList<ListObject> getList() {
         return this.List;
+    }
+    
+    public String getFont(){
+        return this.pageFont;
+    }
+    
+    public String getLayout(){
+        return this.pageLayout;
+    }
+    
+    public String getColor(){
+        return this.pageColor;
+    }
+    
+    public String getBannerImageName(){
+        return this.BannerImageName;
+    }
+    
+    public String getBannerImagePath(){
+        return this.BannerImagePath;
+    }
+    
+    public String getFooterFont(){
+        return this.footerFont;
+    }
+    
+    public String getFooter(){
+        return this.Footer;
     }
 }

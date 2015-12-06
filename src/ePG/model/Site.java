@@ -28,7 +28,7 @@ public class Site {
         FileControl = ui.getFileController();
         pages = FXCollections.observableArrayList();
         pevs =  FXCollections.observableArrayList();
-        siteName = "404";
+        siteName = "";
     }
     
     public ObservableList<PageEditView> getPEV(){
@@ -43,9 +43,15 @@ public class Site {
      * Resets the slide show to have no slides and a default title.
      */
     public void reset() {
-        siteName = "404";
+        siteName = "";
 	pages.clear();
 	pevs.clear();
+    }
+    
+    public void refresh(){
+        for(PageEditView pev : pevs){
+            pev.reload();
+        }
     }
 
     public void setName(String text) {
@@ -56,7 +62,18 @@ public class Site {
          }
     }
     
+    public void setSiteName(String text){
+        this.siteName = text;
+    }
+    public String getSiteName(){
+        return this.siteName;
+    }
+    
     public String getName(){
         return this.StudentName;
+    }
+    
+    public void add(Page page){
+        this.pages.add(page);
     }
 }

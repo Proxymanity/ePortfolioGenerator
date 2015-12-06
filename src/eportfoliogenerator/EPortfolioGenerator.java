@@ -28,8 +28,7 @@ import ePG.view.GeneratorView;
  */
 public class EPortfolioGenerator extends Application {
     // THIS WILL PERFORM SLIDESHOW READING AND WRITING
-    GeneratorFileManager fileManager = new GeneratorFileManager();
-    GeneratorView ui = new GeneratorView(fileManager);
+    GeneratorView ui = new GeneratorView();
     
     
     @Override

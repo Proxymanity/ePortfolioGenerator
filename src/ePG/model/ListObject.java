@@ -12,11 +12,11 @@ import javafx.collections.ObservableList;
  *
  * @author Cokers
  */
-public class List {
+public class ListObject {
     ObservableList<String> list;
     String font;
     
-    public List(ObservableList<String> initList, String initFont){
+    public ListObject(ObservableList<String> initList, String initFont){
         list = initList;
         font = initFont;
     }

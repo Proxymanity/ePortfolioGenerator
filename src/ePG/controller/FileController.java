@@ -28,31 +28,42 @@ public class FileController {
     public void handleNewSiteRequest(){
         ui.refresh();
     }
-   /** 
+   
     public void handleSaveSiteRequest(){
         try{
         //Get the site to save
         Site siteToSave = ui.getSite();
         
         //Save it to a file
-        generatorIO.saveSite(siteToSave);
+        generatorIO.saveSite(siteToSave, false);
         
         //Mark as saved?
         
         //
         }catch (IOException ioe){
-            
+            System.out.println("OH SHIT!");
         }
     }
     
     public void handleSaveAsSiteRequest(){
+        try{
+        //Get the site to save
+        Site siteToSave = ui.getSite();
         
+        //Save it to a file
+        generatorIO.saveSite(siteToSave, false);
+        
+        //Mark as saved?
+        
+        //
+        }catch (IOException ioe){
+            System.out.println("OH SHIT!");
+        }
     }
     
     public void handleLoadSiteRequest(){
         promptToOpen();
     }
-    */
        /**
      * This helper method asks the user for a file to open. The user-selected
      * file is then loaded and the GUI updated. Note that if the user cancels
@@ -61,15 +72,15 @@ public class FileController {
      */
     private void promptToOpen() {
         // AND NOW ASK THE USER FOR THE COURSE TO OPEN
-        FileChooser slideShowFileChooser = new FileChooser();
-       // slideShowFileChooser.setInitialDirectory(new File(PATH_SLIDE_SHOWS));
-       // File selectedFile = slideShowFileChooser.showOpenDialog(ui.getWindow());
+        FileChooser ePortfolioFileChooser = new FileChooser();
+        ePortfolioFileChooser.setInitialDirectory(new File("./data/ePortfolios/"));
+        File selectedFile = ePortfolioFileChooser.showOpenDialog(ui.getWindow());
 
         // ONLY OPEN A NEW FILE IF THE USER SAYS OK
      //   if (selectedFile != null) {
             try {
-		//Site site = ui.getSlideShow();
-              //  slideShowIO.loadSlideShow(slideShowToLoad, selectedFile.getAbsolutePath());
+                Site site = ui.getSite();
+                generatorIO.loadSlideShow(site, selectedFile.getAbsolutePath());
               //  ui.reloadSlideShowPane(slideShowToLoad);
                 ui.updateToolbarControls();
             } catch (Exception e) {
