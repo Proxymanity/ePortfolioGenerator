@@ -59,8 +59,8 @@ public class Page {
         List = FXCollections.observableArrayList();
         Header = FXCollections.observableArrayList();
         
-        ImageSelectionController imageController = new ImageSelectionController();
-        VideoSelectionController videoController = new VideoSelectionController();
+        imageController = new ImageSelectionController();
+        videoController = new VideoSelectionController();
         pev = initPEV;
         
         //Defaults

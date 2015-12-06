@@ -6,6 +6,7 @@
 package ePG.controller;
 
 import ePG.file.GeneratorFileManager;
+import ePG.model.Page;
 import ePG.model.Site;
 import ePG.view.GeneratorView;
 import java.io.File;
@@ -87,5 +88,34 @@ public class FileController {
                 System.out.println("Error in promptToOpen");
      //       }
         }
+    }
+
+    public void handleExportRequest() {
+        
+       Site siteToExport = ui.getSite();
+       if(pageNameChecker(siteToExport)){
+           return;
+       }
+       
+       //export!
+       
+    }
+    
+    //If true, duplicate names exist. 
+    public boolean pageNameChecker(Site site){
+        boolean result = false;
+        for(int i = 0; i < site.getPages().size()-1; i++){
+           for(int j = 1; j < site.getPages().size(); j++){
+               
+               String title1 = site.getPages().get(i).getTitle();
+               String title2 = site.getPages().get(j).getTitle();
+               
+               if(title1.equals(title2)){
+                   return true;
+               }
+               
+           }
+       }
+        return result;
     }
 }

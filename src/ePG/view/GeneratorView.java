@@ -6,7 +6,6 @@
 package ePG.view;
 
 import ePG.controller.FileController;
-import ePG.controller.GeneratorEditController;
 import ePG.file.GeneratorFileManager;
 import ePG.model.Site;
 import javafx.event.Event;
@@ -78,8 +77,6 @@ public class GeneratorView {
     // Routes the proper responses associated with the FileToolbar
     private FileController fileController;
     
-    //This controller responds to page edit buttons
-    private GeneratorEditController editController;
     
     
     
@@ -222,6 +219,7 @@ public class GeneratorView {
         });
         
         ExportSiteButton.setOnAction(e -> {
+           fileController.handleExportRequest();
            editOrView.getTabs().get(1).setDisable(false);
         });
         
