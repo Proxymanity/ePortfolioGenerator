@@ -316,7 +316,9 @@ public class GeneratorView {
     }
     
     public void refresh(){
-        
+        site.reset();
+        pageSelect.getTabs().clear();
+        updateToolbarControls();
     }
 
     public Site getSite() {

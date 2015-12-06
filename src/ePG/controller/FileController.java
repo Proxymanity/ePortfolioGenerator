@@ -26,8 +26,7 @@ public class FileController {
     }
     
     public void handleNewSiteRequest(){
-        //TODO
-        promptToOpen();
+        ui.refresh();
     }
    /** 
     public void handleSaveSiteRequest(){

@@ -29,7 +29,6 @@ public class Site {
         pages = FXCollections.observableArrayList();
         pevs =  FXCollections.observableArrayList();
         siteName = "404";
-        reset();
     }
     
     public ObservableList<PageEditView> getPEV(){
@@ -44,8 +43,9 @@ public class Site {
      * Resets the slide show to have no slides and a default title.
      */
     public void reset() {
+        siteName = "404";
 	pages.clear();
-	
+	pevs.clear();
     }
 
     public void setName(String text) {

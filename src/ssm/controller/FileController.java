@@ -1,5 +1,6 @@
 package ssm.controller;
 
+import ePG.model.SlideShow;
 import java.io.File;
 import java.io.IOException;
 import javafx.collections.ObservableList;
@@ -53,8 +54,7 @@ public class FileController {
 
     // THE APP UI
     private SlideShowMakerView ui;
-    String SlideShowName;
-    String SlideShowPath;
+    SlideShow currentSlideShow;
     
     // THIS GUY KNOWS HOW TO READ AND WRITE SLIDE SHOW DATA
     private SlideShowFileManager slideShowIO;
@@ -140,10 +140,10 @@ public class FileController {
         }
     }
     
-    public void handleLoadSlideShowRequest(String SlideShowPath){
+    public void handleLoadSlideShowRequest(SlideShow SlideShowObject){
         //FileChooser slideShowFileChooser = new FileChooser();
         //slideShowFileChooser.setInitialDirectory(new File(PATH_SLIDE_SHOWS));
-        File selectedFile = new File(SlideShowPath);
+        File selectedFile = new File(SlideShowObject.getPath());
 
         // ONLY OPEN A NEW FILE IF THE USER SAYS OK
         if (selectedFile != null) {
@@ -153,8 +153,7 @@ public class FileController {
                 ui.reloadSlideShowPane(slideShowToLoad);
                 saved = true;
                 ui.updateToolbarControls(saved); 
-                SlideShowName = selectedFile.getName();
-                SlideShowPath = selectedFile.getPath();
+                currentSlideShow.update(selectedFile.getName(),selectedFile.getPath());
             } catch (Exception e) {
                 ErrorHandler eH = ui.getErrorHandler();
                 // @todo
@@ -231,6 +230,7 @@ public class FileController {
             // IF THE USER REALLY WANTS TO EXIT THE APP
             if (continueToExit) {
                 // EXIT THE APPLICATION
+                
                 ui.getWindow().close();
             }
         } catch (IOException ioe) {
@@ -340,8 +340,7 @@ public class FileController {
                 ui.reloadSlideShowPane(slideShowToLoad);
                 saved = true;
                 ui.updateToolbarControls(saved);
-                SlideShowName = selectedFile.getName();
-                SlideShowPath = selectedFile.getPath();
+                currentSlideShow.update(selectedFile.getName(),selectedFile.getPath());
             } catch (Exception e) {
                 ErrorHandler eH = ui.getErrorHandler();
                 // @todo
