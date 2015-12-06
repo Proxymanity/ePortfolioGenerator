@@ -7,6 +7,7 @@ package ePG.model;
 
 import ePG.controller.FileController;
 import ePG.view.GeneratorView;
+import ePG.view.PageEditView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -17,13 +18,26 @@ import javafx.collections.ObservableList;
 public class Site {
     GeneratorView ui;
     ObservableList<Page> pages;
+    ObservableList<PageEditView> pevs;
+    String siteName;
+    String StudentName;
     FileController FileControl;
     
     public Site(GeneratorView initUI){
         ui = initUI;
         FileControl = ui.getFileController();
         pages = FXCollections.observableArrayList();
+        pevs =  FXCollections.observableArrayList();
+        siteName = "404";
         reset();
+    }
+    
+    public ObservableList<PageEditView> getPEV(){
+        return this.pevs;
+    }
+    
+    public ObservableList<Page> getPages(){
+        return this.pages;
     }
     
         /**
@@ -32,5 +46,17 @@ public class Site {
     public void reset() {
 	pages.clear();
 	
+    }
+
+    public void setName(String text) {
+         this.StudentName = text;
+         for(int x = 0; x < pages.size(); x++){
+            pages.get(x).setName(text);
+            pevs.get(x).reload();
+         }
+    }
+    
+    public String getName(){
+        return this.StudentName;
     }
 }

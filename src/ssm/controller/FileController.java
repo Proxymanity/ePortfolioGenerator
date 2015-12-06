@@ -53,6 +53,8 @@ public class FileController {
 
     // THE APP UI
     private SlideShowMakerView ui;
+    String SlideShowName;
+    String SlideShowPath;
     
     // THIS GUY KNOWS HOW TO READ AND WRITE SLIDE SHOW DATA
     private SlideShowFileManager slideShowIO;
@@ -137,7 +139,30 @@ public class FileController {
             eH.processError(LanguagePropertyType.ERROR_UNEXPECTED);
         }
     }
+    
+    public void handleLoadSlideShowRequest(String SlideShowPath){
+        //FileChooser slideShowFileChooser = new FileChooser();
+        //slideShowFileChooser.setInitialDirectory(new File(PATH_SLIDE_SHOWS));
+        File selectedFile = new File(SlideShowPath);
 
+        // ONLY OPEN A NEW FILE IF THE USER SAYS OK
+        if (selectedFile != null) {
+            try {
+		SlideShowModel slideShowToLoad = ui.getSlideShow();
+                slideShowIO.loadSlideShow(slideShowToLoad, selectedFile.getAbsolutePath());
+                ui.reloadSlideShowPane(slideShowToLoad);
+                saved = true;
+                ui.updateToolbarControls(saved); 
+                SlideShowName = selectedFile.getName();
+                SlideShowPath = selectedFile.getPath();
+            } catch (Exception e) {
+                ErrorHandler eH = ui.getErrorHandler();
+                // @todo
+                eH.processError(LanguagePropertyType.ERROR_UNEXPECTED);
+            }
+        }
+    }
+    
     /**
      * This method lets the user open a slideshow saved to a file. It will also
      * make sure data for the current slideshow is not lost.
@@ -189,7 +214,7 @@ public class FileController {
 	    return false;
         }
     }
-
+    
      /**
      * This method will exit the application, making sure the user doesn't lose
      * any data first.
@@ -315,6 +340,8 @@ public class FileController {
                 ui.reloadSlideShowPane(slideShowToLoad);
                 saved = true;
                 ui.updateToolbarControls(saved);
+                SlideShowName = selectedFile.getName();
+                SlideShowPath = selectedFile.getPath();
             } catch (Exception e) {
                 ErrorHandler eH = ui.getErrorHandler();
                 // @todo

@@ -6,8 +6,10 @@
 package ePG.controller;
 
 import ePG.file.GeneratorFileManager;
+import ePG.model.Site;
 import ePG.view.GeneratorView;
 import java.io.File;
+import java.io.IOException;
 import javafx.stage.FileChooser;
 
 /**
@@ -16,19 +18,42 @@ import javafx.stage.FileChooser;
  */
 public class FileController {
     GeneratorView ui;
+    private GeneratorFileManager generatorIO;
+    
     public FileController(GeneratorView initUI, GeneratorFileManager fileManager) {
         ui = initUI;
+        generatorIO = fileManager;
     }
     
     public void handleNewSiteRequest(){
         //TODO
         promptToOpen();
     }
+   /** 
+    public void handleSaveSiteRequest(){
+        try{
+        //Get the site to save
+        Site siteToSave = ui.getSite();
+        
+        //Save it to a file
+        generatorIO.saveSite(siteToSave);
+        
+        //Mark as saved?
+        
+        //
+        }catch (IOException ioe){
+            
+        }
+    }
+    
+    public void handleSaveAsSiteRequest(){
+        
+    }
     
     public void handleLoadSiteRequest(){
         promptToOpen();
     }
-    
+    */
        /**
      * This helper method asks the user for a file to open. The user-selected
      * file is then loaded and the GUI updated. Note that if the user cancels

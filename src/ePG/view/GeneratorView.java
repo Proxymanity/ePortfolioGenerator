@@ -9,6 +9,8 @@ import ePG.controller.FileController;
 import ePG.controller.GeneratorEditController;
 import ePG.file.GeneratorFileManager;
 import ePG.model.Site;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -87,7 +89,7 @@ public class GeneratorView {
 	
 	// MAKE THE DATA MANAGING MODEL
 	site = new Site(this);
-
+        
 	
     }
     
@@ -191,15 +193,16 @@ public class GeneratorView {
         });
         
         LoadSiteButton.setOnAction(e -> {
-         fileController.handleLoadSiteRequest();
+      //   fileController.handleLoadSiteRequest();
         });
         
         
         AddPage.setOnAction(e -> {
            Tab newPage = new Tab();
-           PageEditView pev = new PageEditView(this);
+           PageEditView pev = new PageEditView(this, newPage);
+           site.getPEV().add(pev);
            newPage.setText(pev.getTitle());
-           newPage.setContent(pev);
+           newPage.setContent(pev); 
            pageSelect.getTabs().add(newPage);
            
         //   edit.setContent(siteToolbarPane);
@@ -285,7 +288,8 @@ public class GeneratorView {
         
         Tab newPage = new Tab();
             newPage.setClosable(false);
-           PageEditView pev = new PageEditView(this);
+           PageEditView pev = new PageEditView(this, newPage);
+           site.getPEV().add(pev);
            newPage.setContent(pev);
            newPage.setText(pev.getTitle());
            pageSelect.getTabs().add(newPage);
@@ -313,5 +317,9 @@ public class GeneratorView {
     
     public void refresh(){
         
+    }
+
+    public Site getSite() {
+        return this.site;
     }
 }
