@@ -9,9 +9,19 @@ import ePG.file.GeneratorFileManager;
 import ePG.model.Page;
 import ePG.model.Site;
 import ePG.view.GeneratorView;
+import ePG.view.PageViewer;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
+import ssm.LanguagePropertyType;
+import static ssm.StartupConstants.PATH_SITES;
+import ssm.error.ErrorHandler;
 
 /**
  *
@@ -90,15 +100,19 @@ public class FileController {
         }
     }
 
-    public void handleExportRequest() {
-        
+    public void handleExportRequest(GeneratorView newUI) {
+       ui = newUI;
        Site siteToExport = ui.getSite();
        if(pageNameChecker(siteToExport)){
+           System.out.println("Duplicate Names not allowed!");
            return;
        }
-       
-       //export!
-       
+       Tab viewTab = ui.getView();
+       PageViewer pageview = new PageViewer(ui);
+       Page pageToView = siteToExport.getPages().get(ui.getSelected());
+       pageview.viewPage(pageToView);
+       viewTab.setContent(pageview);
+
     }
     
     //If true, duplicate names exist. 

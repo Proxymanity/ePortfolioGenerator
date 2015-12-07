@@ -1,0 +1,6 @@
+{"title":"Testy","studentName":"SampleName",
+"pages":[{"title":"PageTitle","font":"1","layout":"1","color":"1","bannerImageName":"CarhengeNebraska.jpg","bannerImagePath":"C:\\Users\\Cokers\\Documents\\NetBeansProjects\\CSE219\\ePortfolioGenerator\\ePortfolioGenerator\\images\\slide_show_images\\","footerFont":"4","footer":"Footer!",
+"ITEMS":["HEADER"],
+"HEADER":[{"text":"HeaderText"}],
+
+"TEXT":[],"LIST":[],"IMAGE":[],"VIDEO":[]}]}

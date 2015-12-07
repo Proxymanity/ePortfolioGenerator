@@ -161,6 +161,10 @@ public class GeneratorFileManager {
                 .add("font", page.getFont())
 		.add("layout", page.getLayout())
 		.add("color", page.getColor())
+                .add("bannerImageName", page.getBannerImageName())
+                .add("bannerImagePath", page.getBannerImagePath())
+                .add("footerFont", page.getFooterFont())
+                .add("footer", page.getFooter())
                 .add("ITEMS", itemsJsonArray)
                 .add("HEADER", headerJsonArray)
                 .add("TEXT", textJsonArray)
@@ -330,6 +334,10 @@ public class GeneratorFileManager {
             tempPage.setFont(PageJso.getString("font"));
             tempPage.setLayout(PageJso.getString("layout"));
             tempPage.setColor(PageJso.getString("color"));
+            tempPage.setBannerName(PageJso.getString("bannerImageName"));
+            tempPage.setBannerPath(PageJso.getString("bannerImagePath"));
+            tempPage.setFooterFont(PageJso.getString("footerFont"));
+            tempPage.setFooterText(PageJso.getString("footer"));
             
             items.addAll(loadArrayFromJSONFile(jsonFilePath, "ITEMS", PageJso));
             
@@ -343,8 +351,8 @@ public class GeneratorFileManager {
             JsonArray jsonTextArray = PageJso.getJsonArray("TEXT");
                 for(i = 0; i < jsonTextArray.size(); i++){
                     Text tempText = new Text(
-                            jsonTextArray.getJsonObject(i).getString("font"),
-                            jsonTextArray.getJsonObject(i).getString("text"));
+                            jsonTextArray.getJsonObject(i).getString("text"),
+                            jsonTextArray.getJsonObject(i).getString("font"));
                     Text.add(tempText);
                 }
             

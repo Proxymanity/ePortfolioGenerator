@@ -1,0 +1,13 @@
+@import url(https://fonts.googleapis.com/css?family=Ubuntu);
+
+html{
+        font-family: 'Ubuntu', sans-serif;
+        background-color: #666666
+}
+
+#NavBody{
+    background-color: #999999;
+}
+#body{
+    background-color: white;
+}

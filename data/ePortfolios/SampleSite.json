@@ -1,8 +1,1 @@
-{"title":"SampleSite","studentName":"StudentName","pages":[
-{"title":"PageTitle","font":"1","layout":"1","color":"1",
-"ITEMS":["HEADER","TEXT","IMAGE","VIDEO","LIST"],
-"HEADER":[{"text":"Sample Header"}],
-"TEXT":[{"font":"1","text":"Sample Paragraph"}],
-"LIST":[{"font":"1","listItems":["List1","List2","List 3","List 4"]}],
-"IMAGE":[{"ImageName":"imgName","ImagePath":"imgPath","caption":"Caption","width":"width","height":"height","alignment":"left"}],
-"VIDEO":[{"VideoName":"vdName","VideoPath":"vdPath","caption":"caption","width":"width","height":"height"}]}]}
+{"title":"SampleSite","studentName":"StudentName","pages":[{"title":"PageTitle","font":"1","layout":"1","color":"1","bannerImageName":"Banner.png","bannerImagePath":"./Banner.png","footerFont":"1","footer":"Sample Footer Text","ITEMS":["HEADER","TEXT","IMAGE","VIDEO","LIST"],"HEADER":[{"text":"Sample Header"}],"TEXT":[{"font":"1","text":"Sample Paragraph\nMoonshine\nAnalyze!"}],"LIST":[{"font":"1","listItems":["\"\\\"\\\\\\\"List1\\\\\\\"\\\"\"","\"\\\"\\\\\\\"List2\\\\\\\"\\\"\"","\"\\\"\\\\\\\"List 3\\\\\\\"\\\"\"","\"\\\"\\\\\\\"List 4\\\\\\\"\\\"\""]}],"IMAGE":[{"ImageName":"imgName","ImagePath":"imgPath","caption":"Caption","width":"width","height":"height","alignment":"left"}],"VIDEO":[{"VideoName":"vdName","VideoPath":"vdPath","caption":"caption","width":"width","height":"height"}]}]}

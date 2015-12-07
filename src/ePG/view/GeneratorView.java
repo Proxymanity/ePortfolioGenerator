@@ -39,7 +39,7 @@ import static ssm.StartupConstants.PATH_ICONS;
 public class GeneratorView {
     Stage primaryStage;
     Scene primaryScene;
-    
+    int selectedIndex;
     
     BorderPane GenPane;
     
@@ -91,6 +91,8 @@ public class GeneratorView {
     }
     
     public void startUI(Stage initPrimaryStage, String windowTitle) {
+        edit = new Tab();
+        view = new Tab();
         initFileToolbar();
         initSiteToolbar();
         initWorkspace();
@@ -195,10 +197,12 @@ public class GeneratorView {
         
         SaveSiteButton.setOnAction(e -> {
             fileController.handleSaveSiteRequest();
+            this.refresh();
         });
         
         SaveAsSiteButton.setOnAction(e -> {
             fileController.handleSaveAsSiteRequest();
+            this.refresh();
         });
         
         AddPage.setOnAction(e -> {
@@ -207,6 +211,14 @@ public class GeneratorView {
            site.getPEV().add(pev);
            newPage.setText(pev.getTitle());
            newPage.setContent(pev); 
+           newPage.setOnSelectionChanged(new EventHandler<Event>(){
+               @Override
+               public void handle(Event event) {
+                   if(newPage.isSelected()){
+                       selectedIndex = pageSelect.getTabs().indexOf(newPage);
+                }}
+        });
+           
            pageSelect.getTabs().add(newPage);
            
         });
@@ -219,8 +231,8 @@ public class GeneratorView {
         });
         
         ExportSiteButton.setOnAction(e -> {
-           fileController.handleExportRequest();
            editOrView.getTabs().get(1).setDisable(false);
+           fileController.handleExportRequest(this);
         });
         
         ExitButton.setOnAction(e -> {
@@ -255,8 +267,6 @@ public class GeneratorView {
         Workspace = new BorderPane();
         editOrView = new TabPane();
         editOrView.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-        Tab edit = new Tab();
-        Tab view = new Tab();
         edit.setText("Edit");
         view.setText("View");
         edit.setContent(siteToolbarPane);
@@ -282,11 +292,18 @@ public class GeneratorView {
         RemovePage = initChildButton(pageAddRemove, "Remove BUTTON", "CSS", true);
         
         Tab newPage = new Tab();
-            newPage.setClosable(false);
            PageEditView pev = new PageEditView(this, newPage);
            site.getPEV().add(pev);
-           newPage.setContent(pev);
            newPage.setText(pev.getTitle());
+           newPage.setContent(pev); 
+           newPage.setOnSelectionChanged(new EventHandler<Event>(){
+               @Override
+               public void handle(Event event) {
+                   if(newPage.isSelected()){
+                       selectedIndex = pageSelect.getTabs().indexOf(newPage);
+                }}
+        });
+           
            pageSelect.getTabs().add(newPage);
         //Right now, PageSelect pane is empty
         siteToolbarPane.setTop(pageAddRemove);
@@ -315,6 +332,7 @@ public class GeneratorView {
         pageSelect.getTabs().clear();
         updateToolbarControls();
     }
+    
 
     public Site getSite() {
         return this.site;
@@ -326,5 +344,13 @@ public class GeneratorView {
     
     public Stage getWindow(){
         return primaryStage;
+    }
+    
+    public Tab getView(){
+        return view;
+    }
+    
+    public int getSelected(){
+        return selectedIndex;
     }
 }
