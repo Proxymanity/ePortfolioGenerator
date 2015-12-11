@@ -189,6 +189,20 @@ public class GeneratorView {
         //Set New and Load buttons to run updateToolbar
         newSiteButton.setOnAction(e -> {
          fileController.handleNewSiteRequest();
+           Tab newPage = new Tab();
+           PageEditView pev = new PageEditView(this, newPage);
+           site.getPEV().add(pev);
+           newPage.setText(pev.getTitle());
+           newPage.setContent(pev); 
+           newPage.setOnSelectionChanged(new EventHandler<Event>(){
+               @Override
+               public void handle(Event event) {
+                   if(newPage.isSelected()){
+                       selectedIndex = pageSelect.getTabs().indexOf(newPage);
+                }}
+        });
+           
+           pageSelect.getTabs().add(newPage); 
         });
         
         LoadSiteButton.setOnAction(e -> {
@@ -197,12 +211,12 @@ public class GeneratorView {
         
         SaveSiteButton.setOnAction(e -> {
             fileController.handleSaveSiteRequest();
-            this.refresh();
+           // this.reload();
         });
         
         SaveAsSiteButton.setOnAction(e -> {
             fileController.handleSaveAsSiteRequest();
-            this.refresh();
+          //  this.reload();
         });
         
         AddPage.setOnAction(e -> {
@@ -220,7 +234,7 @@ public class GeneratorView {
         });
            
            pageSelect.getTabs().add(newPage);
-           
+           this.updateToolbarControls();
         });
         
         RemovePage.setOnAction(e -> {
@@ -291,7 +305,7 @@ public class GeneratorView {
         AddPage = initChildButton(pageAddRemove, "Add BUTTON", "CSS", true);
         RemovePage = initChildButton(pageAddRemove, "Remove BUTTON", "CSS", true);
         
-        Tab newPage = new Tab();
+           Tab newPage = new Tab();
            PageEditView pev = new PageEditView(this, newPage);
            site.getPEV().add(pev);
            newPage.setText(pev.getTitle());
@@ -327,7 +341,7 @@ public class GeneratorView {
         RemovePage.setDisable(false);
     }
     
-    public void refresh(){
+    public void reload(){
         site.reset();
         pageSelect.getTabs().clear();
         updateToolbarControls();

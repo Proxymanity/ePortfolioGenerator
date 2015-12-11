@@ -1,1 +1,0 @@
-var SiteName = 'NewSite.json';

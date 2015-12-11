@@ -385,7 +385,7 @@ public class GeneratorFileManager {
                 }
              
             JsonArray jsonVideoArray = PageJso.getJsonArray("VIDEO");
-                for(i = 0; i < jsonImageArray.size(); i++){
+                for(i = 0; i < jsonVideoArray.size(); i++){
                     Video tempVideo = new Video(
                             jsonVideoArray.getJsonObject(i).getString("VideoName"),
                             jsonVideoArray.getJsonObject(i).getString("VideoPath"),

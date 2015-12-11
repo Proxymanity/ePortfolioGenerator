@@ -37,7 +37,7 @@ public class FileController {
     }
     
     public void handleNewSiteRequest(){
-        ui.refresh();
+        ui.reload();
     }
    
     public void handleSaveSiteRequest(){

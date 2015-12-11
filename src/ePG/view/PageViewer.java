@@ -131,7 +131,25 @@ public class PageViewer extends Pane{
         // Now copy over the images
         int i = 1;
         for(Page page: site.getPages()){
+            if(i > 0){
+             File BnrImg = new File(imageDir + page.getBannerImageName());
+            try {
+                BnrImg.createNewFile();
+            } catch (IOException ex) {
+                
+            }
+            Path source =  Paths.get(page.getBannerImagePath() + page.getBannerImageName());
+            Path dest = Paths.get(imageDir);
+            CopyOption A = StandardCopyOption.REPLACE_EXISTING;
+            try {
+                Path destination = dest.resolve(page.getBannerImageName());
+                Files.copy(source, destination, A);
+            } catch (IOException ex) {
+                
+            }
+           }
             for(ePG.model.Image imageObject : page.getImage()){
+                
             File newImg = new File(imageDir + imageObject.getName());
             try {
                 newImg.createNewFile();
